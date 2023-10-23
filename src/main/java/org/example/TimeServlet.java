@@ -7,15 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 @WebServlet(value = "/time")
 
@@ -24,7 +18,7 @@ public class TimeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] timezones = req.getParameterValues("timezone");
         int offset = 0;
-        if (!(timezones == null)) offset = Integer.parseInt(timezones[0]
+        if (timezones != null) offset = Integer.parseInt(timezones[0]
                 .replace("UTC", "")
                 .replace("UT", "")
                 .replace("GMT", "")
@@ -32,7 +26,7 @@ public class TimeServlet extends HttpServlet {
                 .trim());
         String sOffset = "";
         if (offset < 0) sOffset = String.valueOf(offset);
-        else if (offset > 0) sOffset = "+" + String.valueOf(offset);
+        else if (offset > 0) sOffset = "+" + offset;
         OffsetDateTime utcDateTime = OffsetDateTime.now(ZoneOffset.ofHours(offset));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         String formattedDate = utcDateTime.format(formatter) + " UTC" + sOffset;

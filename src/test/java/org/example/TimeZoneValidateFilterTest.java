@@ -1,7 +1,6 @@
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.*;
+package org.example;
 
-import org.example.TimeZoneValidateFilter;
+import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +11,7 @@ public class TimeZoneValidateFilterTest {
         Assert.assertTrue(filter.isValidTimeZone("UTC+2"));
         Assert.assertTrue(filter.isValidTimeZone("UTC-5"));
         Assert.assertTrue(filter.isValidTimeZone("UTC+0"));
-        Assert.assertTrue(filter.isValidTimeZone("UT+2"));
+        Assert.assertTrue(filter.isValidTimeZone("GMT+2"));
         Assert.assertTrue(filter.isValidTimeZone("UT+3"));
     }
 

@@ -16,7 +16,10 @@ public class TimeZoneValidateFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         String[] timezones = req.getParameterValues("timezone");
-        if (timezones == null) chain.doFilter(req, res);
+        if (timezones == null) {
+            chain.doFilter(req, res);
+            return;
+        }
         boolean isValidTimezone = isValidTimeZone(timezones[0]);
 
         if (isValidTimezone) {
@@ -35,8 +38,7 @@ public class TimeZoneValidateFilter extends HttpFilter {
                     .replace("GMT", "")
                     .replace("+", "")
                     .trim());
-            if (offset > 18 || offset < -18) return false;
-            return true;
+            return offset <=18 && offset >= -18;
         } catch (Exception e) {
             return false;
         }
